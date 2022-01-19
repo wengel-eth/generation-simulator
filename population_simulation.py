@@ -10,7 +10,7 @@ data = []
 plot_data = [[],[]]
 
 start_pop = int(input("Population at start: "))
-child_rate = int(input("Rate of replacement: "))
+child_rate = float(input("Rate of replacement: "))
 generations = int(input("Generations: "))
 
 if start_pop != 2:
@@ -19,7 +19,7 @@ if start_pop != 2:
 		'adults' : int(start_pop*0.325),
 		'middleage' : int(start_pop*0.325),
 		'senior' : int(start_pop*0.15),
-		'population' : int(start_pop)
+		'population' : 0
 		})
 elif start_pop == 2:
 	data.append({
@@ -27,12 +27,13 @@ elif start_pop == 2:
 		'adults' : start_pop,
 		'middleage' : 0,
 		'senior' : 0,
-		'population' : start_pop
+		'population' : 0
 		})
 
 for gen in range(generations):
 	couples = int(data[gen-1]['adults']/2)
-	new_kids = couples*child_rate
+	new_kids = int(couples*child_rate)
+
 	new_adults = data[gen-1]['kids']
 	new_seniors = data[gen-1]['middleage']
 	new_middle_age = data[gen-1]['adults']
@@ -45,10 +46,9 @@ for gen in range(generations):
 	})
 
 	population = 0
-	population += data[gen]['kids']
-	population += data[gen]['adults']
-	population += data[gen]['middleage']
-	population += data[gen]['senior']
+	for age in range(len(list(data[gen].keys()))):
+		ar = list(data[gen].keys())
+		population += data[gen][ar[age]]
 	data[gen]['population'] = population
 
 	'''
