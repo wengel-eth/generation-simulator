@@ -12,6 +12,7 @@ plot_data = [[],[]]
 start_pop = int(input("Population at start: "))
 child_rate = float(input("Rate of replacement: "))
 generations = int(input("Generations: "))
+hi_pop = 0 # highest population year
 
 if start_pop != 2:
 	data.append({
@@ -50,6 +51,8 @@ for gen in range(generations):
 		ar = list(data[gen].keys())
 		population += data[gen][ar[age]]
 	data[gen]['population'] = population
+	if population > hi_pop:
+		hi_pop = population
 
 	'''
 	print("Gen ", gen+1)
@@ -66,4 +69,8 @@ for l in range(len(data)-1):
 
 fig, ax = plt.subplots()  # Create a figure containing a single axes.
 ax.plot(plot_data[0], plot_data[1]);  # Plot some data on the axes.
+ax.set_yticks(np.arange(0, (hi_pop), (start_pop/10)))
+ax.grid(True)
+plt.ylabel('Population')
+plt.xlabel('Generation')
 plt.show()
